@@ -3,14 +3,15 @@ import pandas as pd
 from llpandas.chains import LLM_CHAIN
 
 
-class LLDF(pd.DataFrame):
+@pd.api.extensions.register_dataframe_accessor("llm")
+class LLMAccessor:
 
-    @property
-    def _constructor(self):
-        return LLDF
+    def __init__(self, pandas_df: pd.DataFrame):
+        self.df = pandas_df
 
-    def llm(self, query):
-        inputs = {"objective": query, "df_head": self.head(), "stop": "```"}
+    def query(self, query):
+        df = self.df
+        inputs = {"objective": query, "df_head": df.head(), "stop": "```"}
         llm_response = LLM_CHAIN.run(**inputs)
         print("suggested code:")
         print(llm_response)
