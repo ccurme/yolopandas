@@ -20,7 +20,7 @@ Go!
 print(df.head())
 ```
 ```output
-llm_result = {df_head}
+{df_head}
 ```
 ```python"""
 PROMPT = PromptTemplate(template=template, input_variables=["objective", "df_head"])
