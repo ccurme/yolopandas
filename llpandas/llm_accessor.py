@@ -7,7 +7,6 @@ from llpandas.chains import LLM_CHAIN
 
 @pd.api.extensions.register_dataframe_accessor("llm")
 class LLMAccessor:
-
     def __init__(self, pandas_df: pd.DataFrame):
         self.df = pandas_df
 
@@ -27,4 +26,4 @@ class LLMAccessor:
             eval_expression = True
 
         if eval_expression:
-            return(eval(llm_response))
+            return eval(llm_response)
