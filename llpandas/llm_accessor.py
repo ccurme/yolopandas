@@ -6,7 +6,7 @@ from langchain.chains.base import Chain
 from langchain.input import print_text
 import pandas as pd
 
-from llpandas.chains import LLM_CHAIN
+from llpandas.chains import LLM_CHAIN, LLM_CHAIN_WITH_MEMORY
 
 
 @pd.api.extensions.register_dataframe_accessor("llm")
@@ -14,7 +14,7 @@ class LLMAccessor:
     def __init__(self, pandas_df: pd.DataFrame):
         self.df = pandas_df
 
-    def query(self, query: str, chain: Chain = LLM_CHAIN, verify: bool = True) -> Any:
+    def _query(self, query: str, chain: Chain = LLM_CHAIN, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
         df = self.df
         inputs = {"query": query, "df_head": df.head(), "stop": "```"}
@@ -44,3 +44,11 @@ class LLMAccessor:
                 return eval(module_end_str)
             except Exception:
                 exec(module_end_str)
+
+    def query(self, query: str, verify: bool = True) -> Any:
+        """Query the dataframe with natural language."""
+        return self._query(query, chain=LLM_CHAIN_WITH_MEMORY, verify=verify)
+
+    def query_with_memory(self, query: str, verify: bool = True) -> Any:
+        """Query the dataframe with natural language."""
+        return self._query(query, chain=LLM_CHAIN_WITH_MEMORY, verify=verify)
