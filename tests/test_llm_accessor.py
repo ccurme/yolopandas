@@ -83,3 +83,15 @@ class TestLLMAccessor(unittest.TestCase):
             .mean()
         )
         pd.testing.assert_series_equal(expected, result)
+    
+    def test_memory(self):
+        _ = self.product_df.llm.query(
+            "Show me all products that are books.",
+            verify=False,
+        )
+        result = self.product_df.llm.query(
+            "Of these, which has the fewest items stocked?",
+            verify=False,
+        )
+        expected = self.product_df[self.product_df["type"] == "book"].sort_values(by="quantity").head(1)
+        pd.testing.assert_frame_equal(expected, result)

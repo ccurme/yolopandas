@@ -14,7 +14,7 @@ class LLMAccessor:
     def query(self, query: str, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
         df = self.df
-        inputs = {"objective": query, "df_head": df.head(), "stop": "```"}
+        inputs = {"query": query, "df_head": df.head(), "stop": "```"}
         llm_response = LLM_CHAIN.run(**inputs)
         eval_expression = False
         if verify:
@@ -30,6 +30,7 @@ class LLMAccessor:
         if eval_expression:
             # WARNING: This is a bad idea. Here we evaluate the (potentially multi-line)
             # llm response. Do not use unless you trust that llm_response is not malicious.
+            # Adapted from https://stackoverflow.com/a/41472638
             tree = ast.parse(llm_response)
             module = ast.Module(tree.body[:-1], type_ignores=[])
             expression = ast.Expression(tree.body[-1].value)
