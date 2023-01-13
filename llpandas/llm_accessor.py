@@ -1,10 +1,10 @@
 import ast
 from typing import Any
 
-from langchain.chains.base import Chain
-import pandas as pd
 from IPython.display import clear_output
+from langchain.chains.base import Chain
 from langchain.input import print_text
+import pandas as pd
 
 from llpandas.chains import LLM_CHAIN
 
@@ -35,10 +35,8 @@ class LLMAccessor:
         if eval_expression:
             # WARNING: This is a bad idea. Here we evaluate the (potentially multi-line)
             # llm response. Do not use unless you trust that llm_response is not malicious.
-            # Adapted from https://stackoverflow.com/a/41472638
             tree = ast.parse(llm_response)
             module = ast.Module(tree.body[:-1], type_ignores=[])
-            expression = ast.Expression(tree.body[-1].value)
             exec(ast.unparse(module))
             module_end = ast.Module(tree.body[-1:], type_ignores=[])
             module_end_str = ast.unparse(module_end)
