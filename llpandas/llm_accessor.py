@@ -15,7 +15,7 @@ class LLMAccessor:
         self.df = pandas_df
 
     def _query(self, query: str, chain: Chain = LLM_CHAIN, verify: bool = True) -> Any:
-        """Query the dataframe with natural language."""
+        """Query the dataframe using a specified Chain."""
         df = self.df
         inputs = {"query": query, "df_head": df.head(), "stop": "```"}
         llm_response = chain.run(**inputs)
@@ -50,5 +50,5 @@ class LLMAccessor:
         return self._query(query, chain=LLM_CHAIN, verify=verify)
 
     def query_with_memory(self, query: str, verify: bool = True) -> Any:
-        """Query the dataframe with natural language."""
+        """Query the dataframe with natural language. Retain history of conversation."""
         return self._query(query, chain=LLM_CHAIN_WITH_MEMORY, verify=verify)
