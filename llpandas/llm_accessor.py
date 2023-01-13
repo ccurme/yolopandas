@@ -1,6 +1,7 @@
 import ast
 from typing import Any
 
+from langchain.chains.base import Chain
 import pandas as pd
 
 from llpandas.chains import LLM_CHAIN
@@ -11,11 +12,11 @@ class LLMAccessor:
     def __init__(self, pandas_df: pd.DataFrame):
         self.df = pandas_df
 
-    def query(self, query: str, verify: bool = True) -> Any:
+    def query(self, query: str, chain: Chain = LLM_CHAIN, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
         df = self.df
         inputs = {"query": query, "df_head": df.head(), "stop": "```"}
-        llm_response = LLM_CHAIN.run(**inputs)
+        llm_response = chain.run(**inputs)
         eval_expression = False
         if verify:
             print("suggested code:")
