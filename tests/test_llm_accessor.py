@@ -2,6 +2,8 @@ import unittest
 
 from llpandas.llm_accessor import pd
 
+from llpandas.chains import LLM_CHAIN_WITH_MEMORY
+
 
 class TestLLMAccessor(unittest.TestCase):
     @classmethod
@@ -99,10 +101,12 @@ class TestLLMAccessor(unittest.TestCase):
     def test_memory(self):
         _ = self.product_df.llm.query(
             "Show me all products that are books.",
+            chain=LLM_CHAIN_WITH_MEMORY,
             verify=False,
         )
         result = self.product_df.llm.query(
             "Of these, which has the fewest items stocked?",
+            chain=LLM_CHAIN_WITH_MEMORY,
             verify=False,
         )
         expected = (
