@@ -99,11 +99,11 @@ class TestLLMAccessor(unittest.TestCase):
         pd.testing.assert_frame_equal(expected_df, self.product_df)
 
     def test_memory(self):
-        _ = self.product_df.llm.query(
+        _ = self.product_df.llm.query_with_memory(
             "Show me all products that are books.",
             verify=False,
         )
-        result = self.product_df.llm.query(
+        result = self.product_df.llm.query_with_memory(
             "Of these, which has the fewest items stocked?",
             verify=False,
         )

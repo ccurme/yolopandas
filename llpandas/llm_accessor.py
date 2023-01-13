@@ -47,7 +47,7 @@ class LLMAccessor:
 
     def query(self, query: str, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
-        return self._query(query, chain=LLM_CHAIN_WITH_MEMORY, verify=verify)
+        return self._query(query, chain=LLM_CHAIN, verify=verify)
 
     def query_with_memory(self, query: str, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
