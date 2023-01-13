@@ -38,6 +38,7 @@ LLM_CHAIN = LLMChain(llm=LLM, prompt=PROMPT)
 
 
 # Template with memory
+# TODO: add result of exected code to memory; currently we only remember what code was run.
 TEMPLATE_WITH_MEMORY = """
 You are working with a pandas dataframe in Python. The name of the dataframe is `df`.
 
