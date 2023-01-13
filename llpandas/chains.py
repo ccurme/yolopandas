@@ -24,6 +24,8 @@ df.head()
 ```
 ```python
 """
-PROMPT = PromptTemplate(template=TEMPLATE, input_variables=["chat_history", "query", "df_head"])
+PROMPT = PromptTemplate(
+    template=TEMPLATE, input_variables=["chat_history", "query", "df_head"]
+)
 MEMORY = ConversationBufferMemory(memory_key="chat_history", input_key="query")
 LLM_CHAIN = LLMChain(llm=LLM, prompt=PROMPT, memory=MEMORY)
