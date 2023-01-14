@@ -1,45 +1,15 @@
+import os
 import unittest
 
 from llpandas.llm_accessor import pd
-
-from llpandas.chains import LLM_CHAIN_WITH_MEMORY
+from tests import TEST_DIRECTORY
 
 
 class TestLLMAccessor(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.product_df = pd.DataFrame(
-            [
-                {
-                    "name": "The Da Vinci Code",
-                    "type": "book",
-                    "price": 15,
-                    "quantity": 300,
-                    "rating": 4,
-                },
-                {
-                    "name": "Jurassic Park",
-                    "type": "book",
-                    "price": 12,
-                    "quantity": 400,
-                    "rating": 4.5,
-                },
-                {
-                    "name": "Jurassic Park",
-                    "type": "film",
-                    "price": 8,
-                    "quantity": 6,
-                    "rating": 5,
-                },
-                {
-                    "name": "Matilda",
-                    "type": "book",
-                    "price": 6,
-                    "quantity": 80,
-                    "rating": 4,
-                },
-            ],
-        )
+        test_data_path = os.path.join(TEST_DIRECTORY, "data", "product_df.json")
+        cls.product_df = pd.read_json(test_data_path)
 
     def test_basic_use(self):
         result = self.product_df.llm.query(
