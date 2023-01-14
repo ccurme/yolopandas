@@ -34,7 +34,7 @@ profile = "black"
 [tool.mypy]
 ignore_missing_imports = "True"
 disallow_untyped_defs = "True"
-exclude = ["notebooks"]
+exclude = ["tests"]
 
 [build-system]
 requires = ["poetry-core"]
