@@ -1,8 +1,7 @@
 import unittest
 
-from llpandas.llm_accessor import pd
-
 from llpandas.chains import LLM_CHAIN_WITH_MEMORY
+from llpandas.llm_accessor import pd
 
 
 class TestLLMAccessor(unittest.TestCase):

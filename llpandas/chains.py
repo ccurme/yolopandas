@@ -1,9 +1,8 @@
 import os
 
-from langchain import OpenAI, LLMChain, PromptTemplate
+from langchain import LLMChain, OpenAI, PromptTemplate
 from langchain.chains.conversation.memory import ConversationBufferMemory
 from langchain.llms.loading import load_llm
-
 
 LLM_CONFIGURATION_PATH = os.environ.get("LLPANDAS_LLM_CONFIGURATION")
 if LLM_CONFIGURATION_PATH is None:
