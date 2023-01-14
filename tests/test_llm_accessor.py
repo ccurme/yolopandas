@@ -6,7 +6,7 @@ from llpandas.llm_accessor import pd
 
 class TestLLMAccessor(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         cls.product_df = pd.DataFrame(
             [
                 {
@@ -40,7 +40,7 @@ class TestLLMAccessor(unittest.TestCase):
             ],
         )
 
-    def test_basic_use(self):
+    def test_basic_use(self) -> None:
         result = self.product_df.llm.query(
             "What is the price of the highest-priced book?",
             verify=False,
@@ -62,14 +62,14 @@ class TestLLMAccessor(unittest.TestCase):
         expected = self.product_df[self.product_df["type"] != "book"]
         pd.testing.assert_frame_equal(expected, result)
 
-    def test_sliced(self):
+    def test_sliced(self) -> None:
         result = self.product_df[["name", "type", "price", "rating"]].llm.query(
             "What is the price of the highest-priced book?", verify=False
         )
         expected_result = 15
         self.assertEqual(expected_result, result)
 
-    def test_multi_line(self):
+    def test_multi_line(self) -> None:
         query = """
         Add a column `new_column` to the dataframe which is range 1 - number of rows,
         then return the mean of this column by each type.
@@ -85,7 +85,7 @@ class TestLLMAccessor(unittest.TestCase):
         )
         pd.testing.assert_series_equal(expected, result)
 
-    def test_multiline_exec(self):
+    def test_multiline_exec(self) -> None:
         """Test a multiline command when the final line should be exec'd not eval'd."""
         query = """
         Add a column `new_column` to the dataframe which is range 1 - number of rows,
@@ -97,7 +97,7 @@ class TestLLMAccessor(unittest.TestCase):
         ).assign(foo=1)
         pd.testing.assert_frame_equal(expected_df, self.product_df)
 
-    def test_memory(self):
+    def test_memory(self) -> None:
         _ = self.product_df.llm.query_with_memory(
             "Show me all products that are books.",
             verify=False,
