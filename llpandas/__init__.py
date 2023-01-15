@@ -1,7 +1,2 @@
-from langchain.llms.base import BaseLLM
-
-from llpandas.chains import LLM_CHAIN
-
-
-def set_llm(llm: BaseLLM) -> None:
-    LLM_CHAIN.llm = llm
+from llpandas import llm_accessor
+from llpandas.chains import set_llm
