@@ -83,3 +83,15 @@ class TestLLMAccessor(unittest.TestCase):
             .mean()
         )
         pd.testing.assert_series_equal(expected, result)
+
+    def test_multiline_exec(self):
+        """Test a multiline command when the final line should be exec'd not eval'd."""
+        query = """
+        Add a column `new_column` to the dataframe which is range 1 - number of rows,
+        then add a column `foo` which is always the value 1
+        """
+        self.product_df.llm.query(query, verify=False)
+        expected_df = self.product_df.assign(
+            new_column=range(1, len(self.product_df) + 1)
+        ).assign(foo=1)
+        pd.testing.assert_frame_equal(expected_df, self.product_df)
