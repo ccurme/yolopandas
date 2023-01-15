@@ -42,5 +42,5 @@ class LLMAccessor:
             module_end_str = ast.unparse(module_end)
             try:
                 return eval(module_end_str)
-            except:
+            except Exception:
                 exec(module_end_str)
