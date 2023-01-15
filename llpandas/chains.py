@@ -64,7 +64,7 @@ def set_llm(llm: BaseLLM) -> None:
     DEFAULT_LLM = llm
 
 
-def get_chain(llm: Optional[BaseLLM] = None, use_memory: bool =True) -> Chain:
+def get_chain(llm: Optional[BaseLLM] = None, use_memory: bool = True) -> Chain:
     """Get chain to use."""
     if llm is None:
         if DEFAULT_LLM is None:

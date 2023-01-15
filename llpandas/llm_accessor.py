@@ -22,7 +22,9 @@ class LLMAccessor:
         """Set chain to use."""
         self.chain = chain
 
-    def reset_chain(self, llm: Optional[BaseLLM] = None, use_memory: bool = True) -> None:
+    def reset_chain(
+        self, llm: Optional[BaseLLM] = None, use_memory: bool = True
+    ) -> None:
         """Reset chain with LLM or memory kwarg."""
         self.chain = get_chain(llm=llm, use_memory=use_memory)
 
