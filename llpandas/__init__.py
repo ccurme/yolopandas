@@ -1,2 +1,2 @@
-from llpandas import llm_accessor
-from llpandas.chains import set_llm
+from yolopandas import llm_accessor
+from yolopandas.chains import set_llm

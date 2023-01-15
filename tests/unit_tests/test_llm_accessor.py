@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import Mock, patch
 
-from llpandas.llm_accessor import pd
+from yolopandas.llm_accessor import pd
 from langchain.chains.base import Chain
 from tests import TEST_DIRECTORY
 
@@ -21,7 +21,7 @@ class TestLLMAccessor(unittest.TestCase):
         test_data_path = os.path.join(TEST_DIRECTORY, "data", "product_df.json")
         cls.product_df = pd.read_json(test_data_path)
 
-    @patch('llpandas.llm_accessor.get_chain')
+    @patch('yolopandas.llm_accessor.get_chain')
     def test_basic_use(self, mock):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         result = self.product_df.llm.query(
@@ -49,7 +49,7 @@ class TestLLMAccessor(unittest.TestCase):
         expected = self.product_df[self.product_df["type"] != "book"]
         pd.testing.assert_frame_equal(expected, result)
 
-    @patch('llpandas.llm_accessor.get_chain')
+    @patch('yolopandas.llm_accessor.get_chain')
     def test_sliced(self, mock):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         self.product_df.llm.reset_chain()
@@ -59,7 +59,7 @@ class TestLLMAccessor(unittest.TestCase):
         expected_result = 15
         self.assertEqual(expected_result, result)
 
-    @patch('llpandas.llm_accessor.get_chain')
+    @patch('yolopandas.llm_accessor.get_chain')
     def test_multi_line(self, mock):
         """Test that we can accommodate multiple lines in the LLM response."""
         query = """
@@ -80,7 +80,7 @@ class TestLLMAccessor(unittest.TestCase):
         )
         pd.testing.assert_series_equal(expected, result)
 
-    @patch('llpandas.llm_accessor.get_chain')
+    @patch('yolopandas.llm_accessor.get_chain')
     def test_multiline_exec(self, mock):
         """Test a multiline command when the final line should be exec'd not eval'd."""
         query = """
