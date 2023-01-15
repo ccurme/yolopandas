@@ -2,6 +2,7 @@ import os
 from typing import Optional
 
 from langchain import LLMChain, OpenAI, PromptTemplate
+from langchain.chains.base import Chain
 from langchain.chains.conversation.memory import ConversationBufferMemory
 from langchain.llms.base import BaseLLM
 from langchain.llms.loading import load_llm
@@ -58,12 +59,12 @@ PROMPT_WITH_MEMORY = PromptTemplate(
 )
 
 
-def set_llm(llm: BaseLLM):
+def set_llm(llm: BaseLLM) -> None:
     global DEFAULT_LLM
     DEFAULT_LLM = llm
 
 
-def get_chain(llm: Optional[BaseLLM] = None, use_memory=True):
+def get_chain(llm: Optional[BaseLLM] = None, use_memory: bool =True) -> Chain:
     """Get chain to use."""
     if llm is None:
         if DEFAULT_LLM is None:
