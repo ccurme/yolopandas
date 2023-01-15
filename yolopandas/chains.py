@@ -7,6 +7,7 @@ from langchain.chains.conversation.memory import ConversationBufferMemory
 from langchain.llms.base import BaseLLM
 from langchain.llms.loading import load_llm
 
+
 DEFAULT_LLM = None
 # Default template, no memory
 TEMPLATE = """
