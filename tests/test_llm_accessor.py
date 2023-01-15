@@ -39,7 +39,6 @@ class TestLLMAccessor(unittest.TestCase):
             ],
         )
 
-
     def test_basic_use(self) -> None:
         self.product_df.llm.reset_chain(use_memory=False)
         result = self.product_df.llm.query(
