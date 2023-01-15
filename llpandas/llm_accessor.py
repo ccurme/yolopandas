@@ -2,6 +2,8 @@ import ast
 from typing import Any
 
 import pandas as pd
+from IPython.display import clear_output
+from langchain.input import print_text
 
 from llpandas.chains import LLM_CHAIN
 
@@ -14,7 +16,7 @@ class LLMAccessor:
     def query(self, query: str, verify: bool = True) -> Any:
         """Query the dataframe with natural language."""
         df = self.df
-        inputs = {"objective": query, "df_head": df.head(), "stop": "```"}
+        inputs = {"objective": query, "df_head": df.head(), "stop": ["```"]}
         llm_response = LLM_CHAIN.run(**inputs)
         eval_expression = False
         if verify:
@@ -23,6 +25,8 @@ class LLMAccessor:
             print("run this code? y/n")
             user_input = input()
             if user_input == "y":
+                clear_output(wait=True)
+                print_text(llm_response, color="green")
                 eval_expression = True
         else:
             eval_expression = True
@@ -33,5 +37,10 @@ class LLMAccessor:
             tree = ast.parse(llm_response)
             module = ast.Module(tree.body[:-1], type_ignores=[])
             expression = ast.Expression(tree.body[-1].value)
-            exec(compile(module, "", "exec"))
-            return eval(compile(expression, "", "eval"))
+            exec(ast.unparse(module))
+            module_end = ast.Module(tree.body[-1:], type_ignores=[])
+            module_end_str = ast.unparse(module_end)
+            try:
+                return eval(module_end_str)
+            except:
+                exec(module_end_str)

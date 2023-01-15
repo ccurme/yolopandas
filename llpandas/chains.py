@@ -1,9 +1,17 @@
+import os
+
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
+from langchain.llms.loading import load_llm
 from langchain.prompts import PromptTemplate
 
+llm_configuration_path = os.environ.get("LLPANDAS_LLM_CONFIGURATION")
+if llm_configuration_path is None:
+    llm = OpenAI(temperature=0)
+else:
+    llm = load_llm(llm_configuration_path)
 
-llm = OpenAI(temperature=0)
+
 template = """
 You are working with a pandas dataframe in Python. The name of the dataframe is `df`.
 
