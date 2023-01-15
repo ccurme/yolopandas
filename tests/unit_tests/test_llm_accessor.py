@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import Mock, patch
 
-from yolopandas.llm_accessor import pd
+from yolopandas import pd
 from langchain.chains.base import Chain
 from tests import TEST_DIRECTORY
 

@@ -2,7 +2,7 @@ import os
 import unittest
 
 from tests import TEST_DIRECTORY
-from yolopandas.llm_accessor import pd
+from yolopandas import pd
 
 
 class TestLLMAccessor(unittest.TestCase):
