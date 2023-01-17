@@ -2,6 +2,8 @@ import unittest
 
 from llpandas.llm_accessor import pd
 
+from llpandas.chains import LLM_CHAIN_WITH_MEMORY
+
 
 class TestLLMAccessor(unittest.TestCase):
     @classmethod
@@ -95,3 +97,19 @@ class TestLLMAccessor(unittest.TestCase):
             new_column=range(1, len(self.product_df) + 1)
         ).assign(foo=1)
         pd.testing.assert_frame_equal(expected_df, self.product_df)
+
+    def test_memory(self):
+        _ = self.product_df.llm.query_with_memory(
+            "Show me all products that are books.",
+            verify=False,
+        )
+        result = self.product_df.llm.query_with_memory(
+            "Of these, which has the fewest items stocked?",
+            verify=False,
+        )
+        expected = (
+            self.product_df[self.product_df["type"] == "book"]
+            .sort_values(by="quantity")
+            .head(1)
+        )
+        pd.testing.assert_frame_equal(expected, result)
