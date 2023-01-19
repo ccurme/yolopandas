@@ -1,4 +1,0 @@
-langchain==0.0.60
-pandas==1.4.3
-pytest==6.2.2
-ipython
