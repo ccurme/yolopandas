@@ -7,3 +7,8 @@ __pycache__/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Unit test / coverage reports
+.coverage
+coverage.xml
+.pytest_cache/

@@ -15,14 +15,16 @@ from llpandas.chains import get_chain
 class LLMAccessor:
     def __init__(self, pandas_df: pd.DataFrame):
         self.df = pandas_df
-        use_memory = os.environ.get("LLPANDAS_USE_MEMORY", True)
+        use_memory = bool(os.environ.get("LLPANDAS_USE_MEMORY", True))
         self.chain = get_chain(use_memory=use_memory)
 
-    def set_chain(self, chain: Chain):
+    def set_chain(self, chain: Chain) -> None:
         """Set chain to use."""
         self.chain = chain
 
-    def reset_chain(self, llm: Optional[BaseLLM] = None, use_memory: bool = True):
+    def reset_chain(
+        self, llm: Optional[BaseLLM] = None, use_memory: bool = True
+    ) -> None:
         """Reset chain with LLM or memory kwarg."""
         self.chain = get_chain(llm=llm, use_memory=use_memory)
 

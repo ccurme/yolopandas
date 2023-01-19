@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "llpandas"
+version = "0.0.1"
+description = "Interact with Pandas objects via LLMs and langchain."
+authors = []
+license = "MIT"
+readme = "README.md"
+repository = "https://www.github.com/hwchase17/pandas-gpt"
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+langchain = "^0.0.60"
+openai = "^0.25.0"
+pandas = "^1.4"
+pytest = "^6"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^6"
+pytest-cov = "^4.0.0"
+
+[tool.poetry.group.lint.dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^6.0.0"
+
+[tool.poetry.group.typing.dependencies]
+mypy = "^0.991"
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = "True"
+disallow_untyped_defs = "True"
+exclude = ["tests"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
