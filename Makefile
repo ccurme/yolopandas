@@ -14,5 +14,8 @@ lint:
 	poetry run isort . --check
 	poetry run flake8 .
 
+unit_tests:
+	poetry run pytest tests/unit_tests
+
 integration_tests:
-	poetry run pytest tests
+	poetry run pytest tests/integration_tests
