@@ -15,21 +15,21 @@ class TestLLMAccessor(unittest.TestCase):
         self.product_df.llm.reset_chain(use_memory=False)
         result = self.product_df.llm.query(
             "What is the price of the highest-priced book?",
-            verify=False,
+            yolo=True,
         )
         expected_result = 15
         self.assertEqual(expected_result, result)
 
         result = self.product_df.llm.query(
             "What is the average price of products grouped by type?",
-            verify=False,
+            yolo=True,
         )
         expected = self.product_df.groupby("type")["price"].mean()
         pd.testing.assert_series_equal(expected, result)
 
         result = self.product_df.llm.query(
             "Give me products that are not books.",
-            verify=False,
+            yolo=True,
         )
         expected = self.product_df[self.product_df["type"] != "book"]
         pd.testing.assert_frame_equal(expected, result)
@@ -38,11 +38,11 @@ class TestLLMAccessor(unittest.TestCase):
         self.product_df.llm.reset_chain(use_memory=True)
         _ = self.product_df.llm.query(
             "Show me all products that are books.",
-            verify=False,
+            yolo=True,
         )
         result = self.product_df.llm.query(
             "Of these, which has the fewest items stocked?",
-            verify=False,
+            yolo=True,
         )
         expected = (
             self.product_df[self.product_df["type"] == "book"]

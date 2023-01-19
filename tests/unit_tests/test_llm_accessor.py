@@ -26,7 +26,7 @@ class TestLLMAccessor(unittest.TestCase):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         result = self.product_df.llm.query(
             "What is the price of the highest-priced book?",
-            verify=False,
+            yolo=True,
         )
         expected_result = 15
         self.assertEqual(expected_result, result)
@@ -35,7 +35,7 @@ class TestLLMAccessor(unittest.TestCase):
         self.product_df.llm.reset_chain()
         result = self.product_df.llm.query(
             "What is the average price of products grouped by type?",
-            verify=False,
+            yolo=True,
         )
         expected_result = self.product_df.groupby('type')['price'].mean()
         pd.testing.assert_series_equal(expected_result, result)
@@ -44,7 +44,7 @@ class TestLLMAccessor(unittest.TestCase):
         self.product_df.llm.reset_chain()
         result = self.product_df.llm.query(
             "Give me products that are not books.",
-            verify=False,
+            yolo=True,
         )
         expected = self.product_df[self.product_df["type"] != "book"]
         pd.testing.assert_frame_equal(expected, result)
@@ -54,7 +54,7 @@ class TestLLMAccessor(unittest.TestCase):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         self.product_df.llm.reset_chain()
         result = self.product_df[["name", "type", "price", "rating"]].llm.query(
-            "What is the price of the highest-priced book?", verify=False
+            "What is the price of the highest-priced book?", yolo=True
         )
         expected_result = 15
         self.assertEqual(expected_result, result)
@@ -72,7 +72,7 @@ class TestLLMAccessor(unittest.TestCase):
         )
         mock.return_value = _get_mock_chain(mock_response)
         self.product_df.llm.reset_chain()
-        result = self.product_df.llm.query(query, verify=False)
+        result = self.product_df.llm.query(query, yolo=True)
         expected = (
             self.product_df.assign(new_column=range(1, len(self.product_df) + 1))
             .groupby("type")["new_column"]
@@ -93,7 +93,7 @@ class TestLLMAccessor(unittest.TestCase):
         )
         mock.return_value = _get_mock_chain(mock_response)
         self.product_df.llm.reset_chain()
-        self.product_df.llm.query(query, verify=False)
+        self.product_df.llm.query(query, yolo=True)
         expected_df = self.product_df.assign(
             new_column=range(1, len(self.product_df) + 1)
         ).assign(foo=1)

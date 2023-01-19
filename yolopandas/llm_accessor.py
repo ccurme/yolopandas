@@ -28,13 +28,13 @@ class LLMAccessor:
         """Reset chain with LLM or memory kwarg."""
         self.chain = get_chain(llm=llm, use_memory=use_memory)
 
-    def query(self, query: str, verify: bool = True) -> Any:
+    def query(self, query: str, yolo: bool = False) -> Any:
         """Query the dataframe."""
         df = self.df
         inputs = {"query": query, "df_head": df.head(), "stop": "```"}
         llm_response = self.chain.run(**inputs)
         eval_expression = False
-        if verify:
+        if not yolo:
             print("suggested code:")
             print(llm_response)
             print("run this code? y/n")
