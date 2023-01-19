@@ -8,7 +8,7 @@ from langchain.chains.base import Chain
 from langchain.input import print_text
 from langchain.llms.base import BaseLLM
 
-from llpandas.chains import get_chain
+from yolopandas.chains import get_chain
 
 
 @pd.api.extensions.register_dataframe_accessor("llm")

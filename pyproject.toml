@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llpandas"
+name = "yolopandas"
 version = "0.0.1"
 description = "Interact with Pandas objects via LLMs and langchain."
 authors = []
