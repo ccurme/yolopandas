@@ -2,8 +2,6 @@ import unittest
 
 from llpandas.llm_accessor import pd
 
-from llpandas.chains import LLM_CHAIN_WITH_MEMORY
-
 
 class TestLLMAccessor(unittest.TestCase):
     @classmethod
@@ -42,6 +40,7 @@ class TestLLMAccessor(unittest.TestCase):
         )
 
     def test_basic_use(self):
+        self.product_df.llm.reset_chain(use_memory=False)
         result = self.product_df.llm.query(
             "What is the price of the highest-priced book?",
             verify=False,
@@ -99,11 +98,12 @@ class TestLLMAccessor(unittest.TestCase):
         pd.testing.assert_frame_equal(expected_df, self.product_df)
 
     def test_memory(self):
-        _ = self.product_df.llm.query_with_memory(
+        self.product_df.llm.reset_chain(use_memory=True)
+        _ = self.product_df.llm.query(
             "Show me all products that are books.",
             verify=False,
         )
-        result = self.product_df.llm.query_with_memory(
+        result = self.product_df.llm.query(
             "Of these, which has the fewest items stocked?",
             verify=False,
         )

@@ -1,24 +1,36 @@
 import ast
-from typing import Any
+import os
+from typing import Any, Optional
 
+import pandas as pd
 from IPython.display import clear_output
 from langchain.chains.base import Chain
 from langchain.input import print_text
-import pandas as pd
+from langchain.llms.base import BaseLLM
 
-from llpandas.chains import LLM_CHAIN, LLM_CHAIN_WITH_MEMORY
+from llpandas.chains import get_chain
 
 
 @pd.api.extensions.register_dataframe_accessor("llm")
 class LLMAccessor:
     def __init__(self, pandas_df: pd.DataFrame):
         self.df = pandas_df
+        use_memory = os.environ.get("LLPANDAS_USE_MEMORY", True)
+        self.chain = get_chain(use_memory=use_memory)
 
-    def _query(self, query: str, chain: Chain = LLM_CHAIN, verify: bool = True) -> Any:
-        """Query the dataframe using a specified Chain."""
+    def set_chain(self, chain: Chain):
+        """Set chain to use."""
+        self.chain = chain
+
+    def reset_chain(self, llm: Optional[BaseLLM] = None, use_memory: bool = True):
+        """Reset chain with LLM or memory kwarg."""
+        self.chain = get_chain(llm=llm, use_memory=use_memory)
+
+    def query(self, query: str, verify: bool = True) -> Any:
+        """Query the dataframe."""
         df = self.df
         inputs = {"query": query, "df_head": df.head(), "stop": "```"}
-        llm_response = chain.run(**inputs)
+        llm_response = self.chain.run(**inputs)
         eval_expression = False
         if verify:
             print("suggested code:")
@@ -44,11 +56,3 @@ class LLMAccessor:
                 return eval(module_end_str)
             except Exception:
                 exec(module_end_str)
-
-    def query(self, query: str, verify: bool = True) -> Any:
-        """Query the dataframe with natural language."""
-        return self._query(query, chain=LLM_CHAIN, verify=verify)
-
-    def query_with_memory(self, query: str, verify: bool = True) -> Any:
-        """Query the dataframe with natural language. Retain history of conversation."""
-        return self._query(query, chain=LLM_CHAIN_WITH_MEMORY, verify=verify)
