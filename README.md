@@ -39,6 +39,14 @@ Alternatively, you can execute the LLM output without first previewing it:
 df.llm.query("What item is the least expensive?", yolo=True)
 ```
 
+`.query` can return the result of the computation, which we do not constrain. For instance, while `"Show me products under $10"` will return a dataframe, the query `"Split the dataframe into two, 1/3 in one, 2/3 in the other. Return (df1, df2)"` can return a tuple of two dataframes. You can also chain queries together, for instance:
+```python
+df.llm.query("Group by type and take the mean of all numeric columns.", yolo=True).llm.query("Make a bar plot of the result and use a log scale.", yolo=True)
+```
+
+See the [example notebook](docs/example_notebooks/example.ipynb) for more ideas.
+
+
 ## LangChain Components
 
 This package uses several LangChain components, making it easy to work with if you are familiar with LangChain. In particular, it utilizes the LLM, Chain, and Memory abstractions.
@@ -78,6 +86,8 @@ df.reset_chain()
 ### Memory Abstraction
 
 The default chain used by YOLOPandas utilizes the LangChain concept of [memory](https://langchain.readthedocs.io/en/latest/modules/memory.html). This allows for "remembering" of previous commands, making it possible to ask follow up questions or ask for execution of commands that stem from previous interactions.
+
+For example, the query `"Make a seaborn plot of price grouped by type"` can be followed with `"Can you use a dark theme, and pastel colors?"` upon viewing the initial result.
 
 By default, memory is turned on. In order to have it turned off by default, you can set the environment variable `LLPANDAS_USE_MEMORY=False`.
 
