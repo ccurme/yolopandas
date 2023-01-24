@@ -21,7 +21,7 @@ class TestLLMAccessor(unittest.TestCase):
         test_data_path = os.path.join(TEST_DIRECTORY, "data", "product_df.json")
         cls.product_df = pd.read_json(test_data_path)
 
-    @patch('yolopandas.llm_accessor.get_chain')
+    @patch("yolopandas.llm_accessor.get_chain")
     def test_basic_use(self, mock):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         result = self.product_df.llm.query(
@@ -37,7 +37,7 @@ class TestLLMAccessor(unittest.TestCase):
             "What is the average price of products grouped by type?",
             yolo=True,
         )
-        expected_result = self.product_df.groupby('type')['price'].mean()
+        expected_result = self.product_df.groupby("type")["price"].mean()
         pd.testing.assert_series_equal(expected_result, result)
 
         mock.return_value = _get_mock_chain("df[df['type'] != 'book']")
@@ -49,7 +49,7 @@ class TestLLMAccessor(unittest.TestCase):
         expected = self.product_df[self.product_df["type"] != "book"]
         pd.testing.assert_frame_equal(expected, result)
 
-    @patch('yolopandas.llm_accessor.get_chain')
+    @patch("yolopandas.llm_accessor.get_chain")
     def test_sliced(self, mock):
         mock.return_value = _get_mock_chain("df[df['type'] == 'book']['price'].max()")
         self.product_df.llm.reset_chain()
@@ -59,7 +59,7 @@ class TestLLMAccessor(unittest.TestCase):
         expected_result = 15
         self.assertEqual(expected_result, result)
 
-    @patch('yolopandas.llm_accessor.get_chain')
+    @patch("yolopandas.llm_accessor.get_chain")
     def test_multi_line(self, mock):
         """Test that we can accommodate multiple lines in the LLM response."""
         query = """
@@ -80,17 +80,14 @@ class TestLLMAccessor(unittest.TestCase):
         )
         pd.testing.assert_series_equal(expected, result)
 
-    @patch('yolopandas.llm_accessor.get_chain')
+    @patch("yolopandas.llm_accessor.get_chain")
     def test_multiline_exec(self, mock):
         """Test a multiline command when the final line should be exec'd not eval'd."""
         query = """
         Add a column `new_column` to the dataframe which is range 1 - number of rows,
         then add a column `foo` which is always the value 1
         """
-        mock_response = (
-            "df['new_column'] = range(1, len(df) + 1)\n"
-            "df['foo'] = 1"
-        )
+        mock_response = "df['new_column'] = range(1, len(df) + 1)\n" "df['foo'] = 1"
         mock.return_value = _get_mock_chain(mock_response)
         self.product_df.llm.reset_chain()
         self.product_df.llm.query(query, yolo=True)
