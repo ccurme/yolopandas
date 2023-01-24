@@ -61,6 +61,30 @@ yolopandas.set_llm(llm)
 
 ### Chain Abstraction
 
+By working with LangChain's Chain abstraction, it is very easy to plug-and-play different chains into YOLOPandas. This can be useful if you want to customize the prompt, customize the chain, or anything like that.
+
+To use a custom chain for a particular dataframe, you can do:
+
+```python
+df.set_chain(chain)
+```
+
+If you ever want to reset the chain to the base chain, you can do:
+
+```python
+df.reset_chain()
+```
+
 ### Memory Abstraction
+
+The default chain used by YOLOPandas utilizes the LangChain concept of [memory](https://langchain.readthedocs.io/en/latest/modules/memory.html). This allows for "remembering" of previous commands, making it possible to ask follow up questions or ask for execution of commands that stem from previous interactions.
+
+By default, memory is turned on. In order to have it turned off by default, you can set the environment variable `LLPANDAS_USE_MEMORY=False`.
+
+If you are resetting the chain, you can also specify whether to use memory there:
+
+```python
+df.reset_chain(use_memory=False)
+```
 
 
