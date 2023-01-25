@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yolopandas"
-version = "0.0.1"
+version = "0.0.2"
 description = "Interact with Pandas objects via LLMs and langchain."
 authors = []
 license = "MIT"
@@ -9,6 +9,7 @@ repository = "https://www.github.com/ccurme/yolopandas"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
+ipython = "^8.8.0"
 langchain = "^0.0.60"
 openai = "^0.26.0"
 pandas = "^1.4"
