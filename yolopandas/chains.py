@@ -12,6 +12,7 @@ DEFAULT_LLM = None
 # Default template, no memory
 TEMPLATE = """
 You are working with a pandas dataframe in Python. The name of the dataframe is `df`.
+The dataframe has the following columns: {df_columns}.
 
 You should execute code as commanded to either provide information to answer the question or to
 do the transformations required.
@@ -30,13 +31,14 @@ print(df.head())
 ```
 ```python"""
 
-PROMPT = PromptTemplate(template=TEMPLATE, input_variables=["query", "df_head"])
+PROMPT = PromptTemplate(template=TEMPLATE, input_variables=["query", "df_head", "df_columns"])
 
 
 # Template with memory
 # TODO: add result of expected code to memory; currently we only remember what code was run.
 TEMPLATE_WITH_MEMORY = """
 You are working with a pandas dataframe in Python. The name of the dataframe is `df`.
+The dataframe has the following columns: {df_columns}.
 
 You are interacting with a programmer. The programmer issues commands and you should translate
 them into Python code and execute them.
@@ -56,7 +58,7 @@ df.head()
 ```python
 """
 PROMPT_WITH_MEMORY = PromptTemplate(
-    template=TEMPLATE_WITH_MEMORY, input_variables=["chat_history", "query", "df_head"]
+    template=TEMPLATE_WITH_MEMORY, input_variables=["chat_history", "query", "df_head", "df_columns"]
 )
 
 

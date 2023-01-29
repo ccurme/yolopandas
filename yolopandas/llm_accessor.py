@@ -31,7 +31,8 @@ class LLMAccessor:
     def query(self, query: str, yolo: bool = False) -> Any:
         """Query the dataframe."""
         df = self.df
-        inputs = {"query": query, "df_head": df.head(), "stop": "```"}
+        df_columns = df.columns.tolist()
+        inputs = {"query": query, "df_head": df.head(), "df_columns": df_columns, "stop": "```"}
         llm_response = self.chain.run(**inputs)
         eval_expression = False
         if not yolo:
