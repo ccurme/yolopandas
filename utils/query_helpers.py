@@ -1,3 +1,4 @@
+from typing import Any
 from langchain.callbacks import get_openai_callback
 from yolopandas import pd
 
@@ -17,7 +18,7 @@ def run_query_with_cost(df: pd.DataFrame, query: str, yolo: bool = False):
 
     Returns
     -------
-    result : pd.Series
+    result : Any
         The results of the query run against your data. A prompt may be returned as intermediary output to proceed with generating the result or not.
     """
     with get_openai_callback() as cb:
