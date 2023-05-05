@@ -3,6 +3,7 @@ import unittest
 
 from tests import TEST_DIRECTORY
 from yolopandas import pd
+from yolopandas.utils.query_helpers import run_query_with_cost
 
 
 class TestLLMAccessor(unittest.TestCase):
@@ -18,6 +19,11 @@ class TestLLMAccessor(unittest.TestCase):
             yolo=True,
         )
         expected_result = 15
+        self.assertEqual(expected_result, result)
+
+        result = run_query_with_cost(
+            self.product_df, "What is the price of the highest-priced book?", yolo=True
+        )
         self.assertEqual(expected_result, result)
 
         result = self.product_df.llm.query(
