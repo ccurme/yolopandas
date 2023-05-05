@@ -1,11 +1,14 @@
 from typing import Any
+
 from langchain.callbacks import get_openai_callback
+
 from yolopandas import pd
 
 
-def run_query_with_cost(df: pd.DataFrame, query: str, yolo: bool = False):
+def run_query_with_cost(df: pd.DataFrame, query: str, yolo: bool = False) -> Any:
     """
-    A function to run a YOLOPandas query with cost estimation returned for your query in terms of tokens used. This includes total tokens, prompt tokens, completion tokens, and the total cost in USD.
+    A function to run a YOLOPandas query with cost estimation returned for your query in terms of tokens used.
+    This includes total tokens, prompt tokens, completion tokens, and the total cost in USD.
 
     Parameters
     ----------
@@ -14,12 +17,14 @@ def run_query_with_cost(df: pd.DataFrame, query: str, yolo: bool = False):
     query : str
         The query you want to run against your data
     yolo : bool
-        Boolean value used to return a prompt to a user or not to accept the code result before running the code (False means to return the prompt)
+        Boolean value used to return a prompt to a user or not to accept the code result before
+        running the code (False means to return the prompt)
 
     Returns
     -------
     result : Any
-        The results of the query run against your data. A prompt may be returned as intermediary output to proceed with generating the result or not.
+        The results of the query run against your data. A prompt may be returned as intermediary
+        output to proceed with generating the result or not.
     """
     with get_openai_callback() as cb:
         result = df.llm.query(query, yolo=yolo)
