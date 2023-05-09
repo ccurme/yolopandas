@@ -46,6 +46,24 @@ df.llm.query("What item is the least expensive?", yolo=True)
 df.llm.query("Group by type and take the mean of all numeric columns.", yolo=True).llm.query("Make a bar plot of the result and use a log scale.", yolo=True)
 ```
 
+Also, if you want to get a better idea of how much each query costs, you can use the function `run_query_with_cost` found in the utils package to compute the cost in $USD broken down by prompt/completion tokens:
+
+```python
+
+from utils.query_helpers import run_query_with_cost
+
+run_query_with_cost(df, "What item is the least expensive?", yolo=True)
+```
+After running the above code, the output looks like the following:
+
+```
+Total Tokens: 267
+Prompt Tokens: 252
+Completion Tokens: 15
+Total Cost (USD): $0.00534
+```
+
+
 See the [example notebook](docs/example_notebooks/example.ipynb) for more ideas.
 
 
