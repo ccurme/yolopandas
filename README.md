@@ -50,7 +50,7 @@ Also, if you want to get a better idea of how much each query costs, you can use
 
 ```python
 
-from utils.query_helpers import run_query_with_cost
+from yolopandas.utils.query_helpers import run_query_with_cost
 
 run_query_with_cost(df, "What item is the least expensive?", yolo=True)
 ```
