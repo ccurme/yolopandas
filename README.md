@@ -46,7 +46,7 @@ df.llm.query("What item is the least expensive?", yolo=True)
 df.llm.query("Group by type and take the mean of all numeric columns.", yolo=True).llm.query("Make a bar plot of the result and use a log scale.", yolo=True)
 ```
 
-Also, if you want to get a better idea of how much each query costs, you can use the function `run_query_with_cost` found in the utils package to compute the cost in $USD broken down by prompt/completion tokens:
+Also, if you want to get a better idea of how much each query costs, you can use the function `run_query_with_cost` found in the utils module to compute the cost in $USD broken down by prompt/completion tokens:
 
 ```python
 
